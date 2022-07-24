@@ -20,6 +20,7 @@ jobs:
       - name: Generating dockerfiles
         shell: bash
         run: |
+          ls -l
           chmod +x ./scripts.sh
           ./scripts generate_dockerfiles
 
