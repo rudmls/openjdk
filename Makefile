@@ -1,7 +1,3 @@
-define task
-	sleep 0.5; echo "$1";
-endef
-
 hadolint:
 	docker run --rm --interactive \
 	--volume ${PWD}:/work \
@@ -15,17 +11,12 @@ login:
 
 build:
 	for openjdk in $(shell ls ./dockerfiles); do \
-		docker build --tag ${DOCKER_USERNAME}/$${openjdk}:0.1 ./dockerfiles/$${openjdk} & ; \
-	done; \
+		(docker build --tag ${DOCKER_USERNAME}/$${openjdk}:0.1 ./dockerfiles/$${openjdk} &) ; \
+	done
 	wait
 
 push:
 	for openjdk in $(shell ls ./dockerfiles); do \
 		(docker push ${DOCKER_USERNAME}/$${openjdk}:0.1 &) ; \
-	done; \
+	done
 	wait
-
-test:
-	for number in 1 2 3 4 ; do \
-		(echo "$${number}" &) ; \
-    done
