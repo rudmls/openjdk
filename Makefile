@@ -11,12 +11,12 @@ login:
 
 build:
 	for openjdk in $(shell ls ./dockerfiles); do \
-		docker build --tag ${DOCKER_USERNAME}/$${openjdk}:0.1 ./dockerfiles/$${openjdk}; &; \
+		docker build --tag ${DOCKER_USERNAME}/$${openjdk}:0.1 ./dockerfiles/$${openjdk} & ; \
 	done
 	wait
 
 push:
 	for openjdk in $(shell ls ./dockerfiles); do \
-		docker push ${DOCKER_USERNAME}/$${openjdk}:0.1; &; \
+		docker push ${DOCKER_USERNAME}/$${openjdk}:0.1 & ; \
 	done
 	wait
