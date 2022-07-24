@@ -10,11 +10,11 @@ login:
 	--password-stdin
 
 build:
-	for openjdk in $(ls ./dockerfiles); do \
-		docker build --tag ${DOCKER_USERNAME}/${openjdk}:0.1 ./dockerfiles/${openjdk}; \
+	for openjdk in $(shell ls ./dockerfiles); do \
+		docker build --tag ${DOCKER_USERNAME}/$${openjdk}:0.1 ./dockerfiles/$${openjdk}; \
 	done
 
 push:
-	for openjdk in $(ls ./dockerfiles); do \
-		docker build ${DOCKER_USERNAME}/${openjdk}:0.1; \
+	for openjdk in $(shell ls ./dockerfiles); do \
+		docker push ${DOCKER_USERNAME}/$${openjdk}:0.1; \
 	done
