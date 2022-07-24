@@ -1,0 +1,23 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  generating_dockerfiles:
+    name: Generating dockerfiles
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Run bash script
+        shell: bash
+        run: |
+          chmod +x ./render.sh
+          ./render.sh
+          pwd
