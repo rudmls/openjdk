@@ -25,6 +25,7 @@ jobs:
 
   hadolint:
     name: Hadolint
+    needs: generating_dockerfiles
     runs-on: ubuntu-20.04
     steps:
 
