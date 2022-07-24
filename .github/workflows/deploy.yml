@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           ls -l
-          chmod +x ./scripts.sh
+          chmod +x scripts.sh
           ./scripts generate_dockerfiles
 
       - name : Upload dockerfiles
