@@ -17,11 +17,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Run bash script
+      - name: Generating dockerfiles
         shell: bash
-        run: |
-          chmod +x ./render.sh
-          ./render.sh
+        run: ./scripts generate_dockerfiles
+
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
         with:
@@ -45,7 +44,8 @@ jobs:
           path: ./dockerfiles
 
       - name: Lint All Dockerfile
-        run: make hadolint
+        shell: bash
+        run: ./scripts hadolint
 
   push_to_docker_hub:
 
@@ -67,20 +67,13 @@ jobs:
           path: ./dockerfiles
 
       - name: Docker login
-        run: make login
+        shell: bash
+        run: ./scripts docker_login
         
       - name: Build the Docker image
         shell: bash
-        run: |
-          for openjdk in $(ls ./dockerfiles); do
-            docker build --tag ${DOCKER_USERNAME}/${openjdk}:0.1 ./dockerfiles/${openjdk} &
-          done
-          wait
+        run: ./scripts docker_pull
 
       - name: Docker Push
         shell: bash
-        run: |
-          for openjdk in $(ls ./dockerfiles); do
-            docker push ${DOCKER_USERNAME}/${openjdk}:0.1 &
-          done
-          wait
+        run: ./scripts docker_push
