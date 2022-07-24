@@ -12,25 +12,36 @@ jobs:
     name: Generating dockerfiles
     runs-on: ubuntu-20.04
     steps:
-
-      - name: Check out repository
+      -
+        name: Check out repository
         uses: actions/checkout@v2
-
-      - name: Run bash script
+      -
+        name: Run bash script
         shell: bash
         run: |
           chmod +x ./render.sh
           ./render.sh
-          ls -l
+      - 
+        name : Upload dockerfiles
+        uses: actions/upload-artifact@master
+        with:
+          name: dockerfiles
+          path: ./dockerfiles
 
   hadolint:
     name: Hadolint
     needs: generating_dockerfiles
     runs-on: ubuntu-20.04
     steps:
-
-      - name: Check out repository
+      - 
+        name: Check out repository
         uses: actions/checkout@v2
-
-      - name: Lint All Dockerfile
+      - 
+        name: Download dockerfiles
+        uses: actions/download-artifact@master
+        with:
+          name: dockerfiles
+          path: ./dockerfiles
+      - 
+        name: Lint All Dockerfile
         run: make hadolint
