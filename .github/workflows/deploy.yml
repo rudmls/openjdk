@@ -70,7 +70,17 @@ jobs:
         run: make login
         
       - name: Build the Docker image
-        run: make build
+        shell: bash
+        run: |
+          for openjdk in $(ls ./dockerfiles); do
+            docker build --tag ${DOCKER_USERNAME}/${openjdk}:0.1 ./dockerfiles/${openjdk} &
+          done
+          wait
 
       - name: Docker Push
-        run: make push
+        shell: bash
+        run: |
+          for openjdk in $(ls ./dockerfiles); do
+            docker push ${DOCKER_USERNAME}/${openjdk}:0.1 &
+          done
+          wait
