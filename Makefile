@@ -1,20 +1,20 @@
 hadolint:
 	docker run --rm --interactive \
-	--volume $(PWD):/work \
+	--volume ${PWD}:/work \
 	--workdir=/work \
 	hadolint/hadolint hadolint --config ./.hadolint.yml $(shell find ./ -name Dockerfile | sed 's/^./\/work/g' | tr '\n' ' ')
 
 login:
-	echo "$(DOCKER_PASSWORD)" | docker login \
-	--username $(DOCKER_USERNAME) \
+	echo "${DOCKER_PASSWORD}" | docker login \
+	--username ${DOCKER_USERNAME} \
 	--password-stdin
 
-my_test:
-	ifdef toto
-			@echo $(toto)
-	else
-			@echo 'no toto around'
-	endif
-
 build:
-	docker build --tag $(DOCKER_USERNAME)/hadoop-base:$(current_branch) ./base
+	for openjdk in $(ls ./dockerfiles); do \
+		docker build --tag ${DOCKER_USERNAME}/${openjdk}:0.1 ./dockerfiles/${openjdk}; \
+	done
+
+push:
+	for openjdk in $(ls ./dockerfiles); do \
+		docker build ${DOCKER_USERNAME}/${openjdk}:0.1; \
+	done
