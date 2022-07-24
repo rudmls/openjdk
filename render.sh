@@ -10,7 +10,7 @@ function main() {
     mkdir -p dockerfiles
     for version in ${versions[*]}; do
         mkdir -p dockerfiles/openjdk${version} && \
-        cp ./assets ./dockerfiles/openjdk${version} && \
+        cp -r ./assets ./dockerfiles/openjdk${version} && \
         render "${version}" "Dockerfile.template" > ./dockerfiles/openjdk${version}/Dockerfile || exit 1
     done
 }
