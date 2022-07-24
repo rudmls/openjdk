@@ -19,7 +19,9 @@ jobs:
 
       - name: Generating dockerfiles
         shell: bash
-        run: ./scripts generate_dockerfiles
+        run: |
+          chmod +x ./scripts.sh
+          ./scripts generate_dockerfiles
 
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
