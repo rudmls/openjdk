@@ -18,7 +18,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate dockerfiles
-        run: bash ./launcher.sh --generate-dockerfiles
+        run: |
+          env
+          bash ./launcher.sh --generate-dockerfiles
 
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
