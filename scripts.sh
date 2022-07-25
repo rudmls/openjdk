@@ -41,8 +41,7 @@ function docker_push() {
 }
 
 function main() {
-    action=$1
-    case ${action} in
+    case ${1} in
         "generate_dockerfiles") generate_dockerfiles ;;
         "hadolint") hadolint ;;
         "docker_login") docker_login ;;

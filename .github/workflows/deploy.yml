@@ -43,8 +43,7 @@ jobs:
           path: ./dockerfiles
 
       - name: Lint All Dockerfile
-        shell: bash
-        run: ./scripts.sh hadolint
+        run: bash ./scripts.sh hadolint
 
   push_to_docker_hub:
 
@@ -66,13 +65,10 @@ jobs:
           path: ./dockerfiles
 
       - name: Docker login
-        shell: bash
-        run: ./scripts.sh docker_login
+        run: bash ./scripts.sh docker_login
         
       - name: Build the Docker image
-        shell: bash
-        run: ./scripts.sh docker_pull
+        run: bash ./scripts.sh docker_pull
 
       - name: Docker Push
-        shell: bash
-        run: ./scripts.sh docker_push
+        run: bash ./scripts.sh docker_push
