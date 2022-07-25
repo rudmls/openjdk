@@ -18,8 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generating dockerfiles
-        shell: bash
-        run: bash ${GITHUB_WORKSPACE}/scripts.sh generate_dockerfiles
+        run: bash ./scripts.sh generate_dockerfiles
 
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
