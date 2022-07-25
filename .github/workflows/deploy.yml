@@ -19,9 +19,7 @@ jobs:
 
       - name: Generating dockerfiles
         shell: bash
-        run: |
-          chmod +x ./scripts.sh
-          ./scripts.sh generate_dockerfiles
+        run: bash ${GITHUB_WORKSPACE}/scripts.sh generate_dockerfiles
 
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2

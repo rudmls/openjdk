@@ -1,3 +1,20 @@
+
+define render
+    sed -r "s|\{\{\s*java_version\s*\}\}|${1}|" ${2}
+endef
+
+versions = 8 11 17
+
+generate_dockerfiles:
+	mkdir -p dockerfiles
+	for version in $(versions); do \
+		echo $$version; \
+		mkdir -p dockerfiles/openjdk$${version}; \
+        cp -r ./assets ./dockerfiles/openjdk$${version}; \
+		$(call render,$${version},Dockerfile.template) > ./dockerfiles/openjdk$${version}/Dockerfile
+	done
+
+
 hadolint:
 	docker run --rm --interactive \
 	--volume ${PWD}:/work \
