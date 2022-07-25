@@ -20,9 +20,8 @@ jobs:
       - name: Generating dockerfiles
         shell: bash
         run: |
-          chmod +x scripts.sh
-          ls -l
-          ./scripts generate_dockerfiles
+          chmod +x ./scripts.sh
+          ./scripts.sh generate_dockerfiles
 
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
@@ -48,7 +47,7 @@ jobs:
 
       - name: Lint All Dockerfile
         shell: bash
-        run: ./scripts hadolint
+        run: ./scripts.sh hadolint
 
   push_to_docker_hub:
 
@@ -71,12 +70,12 @@ jobs:
 
       - name: Docker login
         shell: bash
-        run: ./scripts docker_login
+        run: ./scripts.sh docker_login
         
       - name: Build the Docker image
         shell: bash
-        run: ./scripts docker_pull
+        run: ./scripts.sh docker_pull
 
       - name: Docker Push
         shell: bash
-        run: ./scripts docker_push
+        run: ./scripts.sh docker_push
