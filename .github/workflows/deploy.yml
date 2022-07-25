@@ -17,8 +17,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Generating dockerfiles
-        run: bash ./scripts.sh generate_dockerfiles
+      - name: Generate dockerfiles
+        run: bash ./launcher.sh --generate-dockerfiles
 
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
@@ -43,7 +43,7 @@ jobs:
           path: ./dockerfiles
 
       - name: Lint All Dockerfile
-        run: bash ./scripts.sh hadolint
+        run: bash ./launcher.sh --hadolint
 
   push_to_docker_hub:
 
@@ -65,10 +65,10 @@ jobs:
           path: ./dockerfiles
 
       - name: Docker login
-        run: bash ./scripts.sh docker_login
+        run: bash ./launcher.sh --docker-login
         
       - name: Build the Docker image
-        run: bash ./scripts.sh docker_pull
+        run: bash ./launcher.sh --docker-build
 
       - name: Docker Push
-        run: bash ./scripts.sh docker_push
+        run: bash ./launcher.sh --docker-push

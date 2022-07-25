@@ -1,4 +1,3 @@
-
 function render() {
     sed -r "s|\{\{\s*java_version\s*\}\}|${1}|" ${2}
 }
@@ -14,16 +13,16 @@ function generate_dockerfiles() {
 }
 
 function hadolint() {
-	docker run --rm --interactive \
-	--volume ${PWD}:/work \
-	--workdir=/work \
-	hadolint/hadolint hadolint --config ./.hadolint.yml $(find ./ -name Dockerfile | sed 's/^./\/work/g' | tr '\n' ' ')
+    docker run --rm --interactive \
+    --volume ${PWD}:/work \
+    --workdir=/work \
+    hadolint/hadolint hadolint --config ./.hadolint.yml $(find ./ -name Dockerfile | sed 's/^./\/work/g' | tr '\n' ' ')
 }
 
 function docker_login() {
-	echo "${DOCKER_PASSWORD}" | docker login \
-	--username ${DOCKER_USERNAME} \
-	--password-stdin
+    echo "${DOCKER_PASSWORD}" | docker login \
+    --username ${DOCKER_USERNAME} \
+    --password-stdin
 }
 
 function docker_build() {
@@ -42,11 +41,11 @@ function docker_push() {
 
 function main() {
     case ${1} in
-        "generate_dockerfiles") generate_dockerfiles ;;
-        "hadolint") hadolint ;;
-        "docker_login") docker_login ;;
-        "docker_build") docker_build ;;
-        "docker_push") docker_push ;;
+        "--generate-dockerfiles") generate_dockerfiles ;;
+        "--hadolint") hadolint ;;
+        "--docker-login") docker_login ;;
+        "--docker-build") docker_build ;;
+        "--docker-push") docker_push ;;
     esac
 }
 
