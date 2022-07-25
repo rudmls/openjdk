@@ -30,6 +30,7 @@ jobs:
           env
           bash ./launcher.sh --generate-dockerfiles
 
+
       - name : Upload dockerfiles
         uses: actions/upload-artifact@v2
         with:
